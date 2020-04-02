@@ -10,7 +10,7 @@ __all__ = [
 ]
 
 # 动作延迟
-def action_delay(func):
+def _mouseSecurityDelay(func):
     def wrapper(*args, **kwargs):
         self = args[0]
         # 前置延迟
@@ -52,17 +52,17 @@ class MouseElf():
         ).astype(int).tolist()
 
     # 按下
-    @action_delay
+    @_mouseSecurityDelay
     def __press(self, action, **kwargs):
         self.mouse.press(action)
 
     # 抬起
-    @action_delay
+    @_mouseSecurityDelay
     def __release(self, action, **kwargs):
         self.mouse.release(action)
 
     # 按键
-    @action_delay
+    @_mouseSecurityDelay
     def __click(self, action, press_time=None, num=1, click_interval=None, **kwargs):
         for i in range(num):
             self.mouse.press(action)
@@ -71,7 +71,7 @@ class MouseElf():
             if i < num - 1: time.sleep(click_interval or self.settings['click_interval'])
 
     # 移动鼠标
-    @action_delay
+    @_mouseSecurityDelay
     def __move(self, point, point_start=None, speed='normal', **kwargs):
         if not speed:
             self.mouse.position = point
@@ -101,7 +101,7 @@ class MouseElf():
         self.__move(point=point, point_start=point_start, speed=speed, **kwargs)
 
     # 滚动
-    @action_delay
+    @_mouseSecurityDelay
     def __scroll(self, x, y, **kwargs):
         self.mouse.scroll(x, y)
 
