@@ -29,16 +29,16 @@ def _mouseSecurityDelay(func):
 class MouseElf():
     def __init__(
             self,
-            press_time=global_settings.MOUSE_PRESS_TIME,  # 按键时间
             before_delay=global_settings.MOUSE_BEFORE_DELAY,  # 前置延迟
             after_delay=global_settings.MOUSE_AFTER_DELAY,  # 后置延迟
-            click_interval=global_settings.CLICK_INTERVAL,  # 连续点击延时
+            press_time=global_settings.MOUSE_PRESS_TIME,  # 按键时间
+            interval=global_settings.MOUSE_INTERVAL,  # 连续点击延时
     ):
         self.settings = dict(
             press_time=press_time,
             before_delay=before_delay,
             after_delay=after_delay,
-            click_interval=click_interval
+            interval=interval
         )
         self.mouse = MouseController()
 
@@ -63,12 +63,12 @@ class MouseElf():
 
     # 按键
     @_mouseSecurityDelay
-    def __click(self, action, press_time=None, num=1, click_interval=None, **kwargs):
+    def __click(self, action, press_time=None, num=1, interval=None, **kwargs):
         for i in range(num):
             self.mouse.press(action)
             time.sleep(press_time or self.settings['press_time'])
             self.mouse.release(action)
-            if i < num - 1: time.sleep(click_interval or self.settings['click_interval'])
+            if i < num - 1: time.sleep(interval or self.settings['interval'])
 
     # 移动鼠标
     @_mouseSecurityDelay
@@ -124,7 +124,7 @@ class MouseElf():
             before_delay = None (前置延时),如果为None:使用self.settings['before_delay']
             after_delay = None (后置延时),如果为None:使用self.settings['after_delay']
             num=1(点击次数)
-            click_interval=None(点击时间间隔),如果为None:使用self.settings['click_interval']
+            interval=None(点击时间间隔),如果为None:使用self.settings['interval']
         :return:None
         '''
         return self.__click(action=Button.left, press_time=press_time, **kwargs)
@@ -138,7 +138,7 @@ class MouseElf():
             before_delay = None (前置延时),如果为None:使用self.settings['before_delay']
             after_delay = None (后置延时),如果为None:使用self.settings['after_delay']
             num=1(点击次数)
-            click_interval=None(点击时间间隔),如果为None:使用self.settings['click_interval']
+            interval=None(点击时间间隔),如果为None:使用self.settings['interval']
         :return:None
         '''
         return self.__click(action=Button.right, press_time=press_time, **kwargs)
@@ -152,49 +152,49 @@ class MouseElf():
             before_delay = None (前置延时),如果为None:使用self.settings['before_delay']
             after_delay = None (后置延时),如果为None:使用self.settings['after_delay']
             num=1(点击次数)
-            click_interval=None(点击时间间隔),如果为None:使用self.settings['click_interval']
+            interval=None(点击时间间隔),如果为None:使用self.settings['interval']
         :return:None
         '''
         return self.__click(action=Button.middle, press_time=press_time, **kwargs)
 
     # 双击鼠标左键
-    def click_db_left(self, press_time=None, click_interval=None, **kwargs):
+    def click_db_left(self, press_time=None, interval=None, **kwargs):
         '''双击鼠标左键
         :param press_time:
             按住时间 = press_time or self.settings['press_time']
-        :param click_interval: click_interval=None(点击时间间隔),如果为None:使用self.settings['click_interval']
+        :param interval: interval=None(点击时间间隔),如果为None:使用self.settings['interval']
         :param kwargs:
             before_delay = None (前置延时),如果为None:使用self.settings['before_delay']
             after_delay = None (后置延时),如果为None:使用self.settings['after_delay']
         :return:None
         '''
-        return self.__click(action=Button.left, press_time=press_time, click_interval=click_interval, num=2, **kwargs)
+        return self.__click(action=Button.left, press_time=press_time, interval=interval, num=2, **kwargs)
 
     # 双击鼠标右键
-    def click_db_right(self, press_time=None, click_interval=None, **kwargs):
+    def click_db_right(self, press_time=None, interval=None, **kwargs):
         '''双击鼠标右键
         :param press_time:
             按住时间 = press_time or self.settings['press_time']
-        :param click_interval: click_interval=None(点击时间间隔),如果为None:使用self.settings['click_interval']
+        :param interval: interval=None(点击时间间隔),如果为None:使用self.settings['interval']
         :param kwargs:
             before_delay = None (前置延时),如果为None:使用self.settings['before_delay']
             after_delay = None (后置延时),如果为None:使用self.settings['after_delay']
         :return:None
         '''
-        return self.__click(action=Button.right, press_time=press_time, click_interval=click_interval, num=2, **kwargs)
+        return self.__click(action=Button.right, press_time=press_time, interval=interval, num=2, **kwargs)
 
     # 双击鼠标中键
-    def click_db_middle(self, press_time=None, click_interval=None, **kwargs):
+    def click_db_middle(self, press_time=None, interval=None, **kwargs):
         '''双击鼠标中键
         :param press_time:
             按住时间 = press_time or self.settings['press_time']
-        :param click_interval: click_interval=None(点击时间间隔),如果为None:使用self.settings['click_interval']
+        :param interval: interval=None(点击时间间隔),如果为None:使用self.settings['interval']
         :param kwargs:
             before_delay = None (前置延时),如果为None:使用self.settings['before_delay']
             after_delay = None (后置延时),如果为None:使用self.settings['after_delay']
         :return:None
         '''
-        return self.__click(action=Button.middle, press_time=press_time, click_interval=click_interval, num=2, **kwargs)
+        return self.__click(action=Button.middle, press_time=press_time, interval=interval, num=2, **kwargs)
 
     # 绝对位置移动
     def move(self, point, point_start=None, speed=None, **kwargs):
@@ -215,7 +215,7 @@ class MouseElf():
         return self.__move(point=point, point_start=point_start, speed=speed, **kwargs)
 
     # 移动后左键点击
-    def move_l(self, point, point_start=None, speed=None, press_time=None, num=1, click_interval=None, **kwargs):
+    def move_l(self, point, point_start=None, speed=None, press_time=None, num=1, interval=None, **kwargs):
         '''移动后左键点击
         :param point:(x,y),绝对位置终点
         :param point_start: (x,y),起点,None则使用当前位置
@@ -229,8 +229,8 @@ class MouseElf():
             按住时间 = press_time or self.settings['press_time']
         :param num:
             num=1(点击次数)
-        :param click_interval:
-            click_interval=None(点击时间间隔),如果为None:使用self.settings['click_interval']
+        :param interval:
+            interval=None(点击时间间隔),如果为None:使用self.settings['interval']
         :param kwargs:
             before_delay = None (前置延时),如果为None:使用self.settings['before_delay']
             after_delay = None (后置延时),如果为None:使用self.settings['after_delay']
@@ -239,10 +239,10 @@ class MouseElf():
         # 移动位置
         self.__move(point=point, point_start=point_start, speed=speed, **kwargs)
         # 点击左键
-        self.__click(action=Button.left, press_time=press_time, click_interval=click_interval, num=num, **kwargs)
+        self.__click(action=Button.left, press_time=press_time, interval=interval, num=num, **kwargs)
 
     # 移动后右键点击
-    def move_r(self, point, point_start=None, speed=None, press_time=None, num=1, click_interval=None, **kwargs):
+    def move_r(self, point, point_start=None, speed=None, press_time=None, num=1, interval=None, **kwargs):
         '''移动后右键点击
         :param point:(x,y),绝对位置终点
         :param point_start: (x,y),起点,None则使用当前位置
@@ -256,8 +256,8 @@ class MouseElf():
             按住时间 = press_time or self.settings['press_time']
         :param num:
             num=1(点击次数)
-        :param click_interval:
-            click_interval=None(点击时间间隔),如果为None:使用self.settings['click_interval']
+        :param interval:
+            interval=None(点击时间间隔),如果为None:使用self.settings['interval']
         :param kwargs:
             before_delay = None (前置延时),如果为None:使用self.settings['before_delay']
             after_delay = None (后置延时),如果为None:使用self.settings['after_delay']
@@ -266,10 +266,10 @@ class MouseElf():
         # 位置移动
         self.__move(point=point, point_start=point_start, speed=speed, **kwargs)
         # 点击右键
-        self.__click(action=Button.right, press_time=press_time, click_interval=click_interval, num=num, **kwargs)
+        self.__click(action=Button.right, press_time=press_time, interval=interval, num=num, **kwargs)
 
     # 移动后点击中键
-    def move_m(self, point, point_start=None, speed=None, press_time=None, num=1, click_interval=None, **kwargs):
+    def move_m(self, point, point_start=None, speed=None, press_time=None, num=1, interval=None, **kwargs):
         '''移动后点击中键
         :param point:(x,y),绝对位置终点
         :param point_start: (x,y),起点,None则使用当前位置
@@ -283,8 +283,8 @@ class MouseElf():
             按住时间 = press_time or self.settings['press_time']
         :param num:
             num=1(点击次数)
-        :param click_interval:
-            click_interval=None(点击时间间隔),如果为None:使用self.settings['click_interval']
+        :param interval:
+            interval=None(点击时间间隔),如果为None:使用self.settings['interval']
         :param kwargs:
             before_delay = None (前置延时),如果为None:使用self.settings['before_delay']
             after_delay = None (后置延时),如果为None:使用self.settings['after_delay']
@@ -293,7 +293,7 @@ class MouseElf():
         # 位置移动
         self.__move(point=point, point_start=point_start, speed=speed, **kwargs)
         # 点击中键
-        self.__click(action=Button.middle, press_time=press_time, click_interval=click_interval, num=num, **kwargs)
+        self.__click(action=Button.middle, press_time=press_time, interval=interval, num=num, **kwargs)
 
     # 相对移动
     def move_relative(self, deviation, point_start=None, speed=None, **kwargs):
@@ -314,7 +314,7 @@ class MouseElf():
         self.__move_relative(deviation=deviation, point_start=point_start, speed=speed, **kwargs)
 
     # 相对移动后点击左键
-    def move_relative_l(self, deviation, point_start=None, speed=None, press_time=None, num=1, click_interval=None,
+    def move_relative_l(self, deviation, point_start=None, speed=None, press_time=None, num=1, interval=None,
                         **kwargs):
         '''相对移动后点击左键
         :param deviation: (x,y)相对于point_start的偏移量
@@ -329,18 +329,18 @@ class MouseElf():
             按住时间 = press_time or self.settings['press_time']
         :param num:
             num=1(点击次数)
-        :param click_interval:
-            click_interval=None(点击时间间隔),如果为None:使用self.settings['click_interval']
+        :param interval:
+            interval=None(点击时间间隔),如果为None:使用self.settings['interval']
         :param kwargs:
             before_delay = None (前置延时),如果为None:使用self.settings['before_delay']
             after_delay = None (后置延时),如果为None:使用self.settings['after_delay']
         :return:None
         '''
         self.__move_relative(deviation=deviation, point_start=point_start, speed=speed, **kwargs)
-        self.__click(action=Button.left, press_time=press_time, click_interval=click_interval, num=num, **kwargs)
+        self.__click(action=Button.left, press_time=press_time, interval=interval, num=num, **kwargs)
 
     # 相对移动后点击右键
-    def move_relative_r(self, deviation, point_start=None, speed=None, press_time=None, num=1, click_interval=None,
+    def move_relative_r(self, deviation, point_start=None, speed=None, press_time=None, num=1, interval=None,
                         **kwargs):
         '''相对移动后点击右键
         :param deviation: (x,y)相对于point_start的偏移量
@@ -355,18 +355,18 @@ class MouseElf():
             按住时间 = press_time or self.settings['press_time']
         :param num:
             num=1(点击次数)
-        :param click_interval:
-            click_interval=None(点击时间间隔),如果为None:使用self.settings['click_interval']
+        :param interval:
+            interval=None(点击时间间隔),如果为None:使用self.settings['interval']
         :param kwargs:
             before_delay = None (前置延时),如果为None:使用self.settings['before_delay']
             after_delay = None (后置延时),如果为None:使用self.settings['after_delay']
         :return:None
         '''
         self.__move_relative(deviation=deviation, point_start=point_start, speed=speed, **kwargs)
-        self.__click(action=Button.right, press_time=press_time, click_interval=click_interval, num=num, **kwargs)
+        self.__click(action=Button.right, press_time=press_time, interval=interval, num=num, **kwargs)
 
     # 相对移动后点击中键
-    def move_relative_m(self, deviation, point_start=None, speed=None, press_time=None, num=1, click_interval=None,
+    def move_relative_m(self, deviation, point_start=None, speed=None, press_time=None, num=1, interval=None,
                         **kwargs):
         '''相对移动后点击中键
         :param deviation: (x,y)相对于point_start的偏移量
@@ -381,15 +381,15 @@ class MouseElf():
             按住时间 = press_time or self.settings['press_time']
         :param num:
             num=1(点击次数)
-        :param click_interval:
-            click_interval=None(点击时间间隔),如果为None:使用self.settings['click_interval']
+        :param interval:
+            interval=None(点击时间间隔),如果为None:使用self.settings['interval']
         :param kwargs:
             before_delay = None (前置延时),如果为None:使用self.settings['before_delay']
             after_delay = None (后置延时),如果为None:使用self.settings['after_delay']
         :return:None
         '''
         self.__move_relative(deviation=deviation, point_start=point_start, speed=speed, **kwargs)
-        self.__click(action=Button.middle, press_time=press_time, click_interval=click_interval, num=num, **kwargs)
+        self.__click(action=Button.middle, press_time=press_time, interval=interval, num=num, **kwargs)
 
     # 滚轮滚动
     def scroll(self, x, y, **kwargs):
