@@ -13,3 +13,10 @@ KEYBOARD_INTERVAL = 0.1
 
 # clipbaord
 CLIPBOARD_CHARSET = 'gbk'
+
+# window
+WINDOW_TITLE = 'Program Manager'
+WINDOW_MANAGE_TIMEOUT = 5
+WINDOW_NEW_BUILD_TIMEOUT = 5
+
+
