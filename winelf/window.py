@@ -5,6 +5,8 @@ import win32gui
 from winelf import global_settings
 import win32con
 
+__all__ = ['WindowElf']
+
 
 def blockWrapper(block=True, timeout=5):
     def wrapper1(func):

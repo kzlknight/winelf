@@ -2,10 +2,10 @@ import win32clipboard
 import win32con
 from winelf import global_settings
 
-__all__ = ['Clipboard']
+__all__ = ['ClipboardElf']
 
 
-class Clipboard():
+class ClipboardElf():
     def __init__(self, charset=global_settings.CLIPBOARD_CHARSET):
         # 剪贴板的编码
         self.charest = charset
@@ -32,3 +32,4 @@ class Clipboard():
         win32clipboard.OpenClipboard()
         win32clipboard.EmptyClipboard()
         win32clipboard.CloseClipboard()
+
